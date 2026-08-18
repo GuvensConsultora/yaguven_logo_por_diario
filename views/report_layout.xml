@@ -73,4 +73,25 @@
         </xpath>
     </template>
 
+    <!--
+        La factura argentina no pasa por el bloque de logo de los layouts de arriba:
+        `l10n_latam_invoice_document` apaga ese bloque (`t-if="not custom_header"`) y en su
+        lugar llama a `l10n_ar.custom_header`, que arma el encabezado con la letra del
+        comprobante y escribe el logo directo contra `o.company_id.logo`.
+
+        `logo_diario` ya viene resuelto del `web.external_layout`, y las variables del
+        llamador siguen visibles a través del `t-call` anidado, así que acá sólo se
+        reemplaza la expresión del `img`.
+
+        El remito (`l10n_ar_stock.custom_header`) hereda de este template con `o` = picking,
+        que no tiene `journal_id`: ahí `logo_diario` es falso y el logo sigue siendo el de la
+        compañía, igual que antes.
+    -->
+    <template id="custom_header_logo_diario" inherit_id="l10n_ar.custom_header">
+        <xpath expr="//img[@t-att-src='image_data_uri(o.company_id.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or o.company_id.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or o.company_id.logo)</attribute>
+        </xpath>
+    </template>
+
 </odoo>

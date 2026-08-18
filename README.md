@@ -33,6 +33,19 @@ La guarda (`o and 'journal_id' in o`) copia el idioma que usa el propio Odoo en
 `web.external_layout`: `o` puede no estar definido —al previsualizar el formato del
 documento desde Ajustes, por ejemplo— y QWeb lo evalúa como falso.
 
+### El encabezado argentino
+
+La factura argentina **no pasa por ese bloque de logo**. `l10n_latam_invoice_document`
+apaga el encabezado nativo (`t-if="not custom_header"`) y llama en su lugar a
+`l10n_ar.custom_header`, que arma la cabecera con la letra del comprobante y escribe el
+logo directo contra `o.company_id.logo`. Por eso el módulo hereda también ese template:
+sin eso, la factura AR sale siempre con el logo de la compañía aunque el diario tenga
+uno cargado.
+
+El remito (`l10n_ar_stock.custom_header`) hereda del mismo encabezado, pero ahí `o` es un
+`stock.picking` sin `journal_id`: la variable queda en falso y el logo sigue siendo el de
+la compañía.
+
 ## Uso
 
 Contabilidad → Configuración → Diarios → el diario → campo **Logo del punto de venta**.
@@ -45,5 +58,9 @@ Contabilidad → Configuración → Diarios → el diario → campo **Logo del p
 
 ## Compatibilidad
 
-Odoo 19.0. Cubre los siete layouts nativos: standard, bold, boxed, bubble, folder,
-striped y wave.
+Odoo 19.0. Cubre los siete layouts nativos (standard, bold, boxed, bubble, folder,
+striped y wave) y el encabezado de la localización argentina (`l10n_ar.custom_header`),
+que es el que usan las facturas con letra A/B/C.
+
+Depende de `l10n_ar`, así que el módulo apunta a instalaciones con la localización
+argentina instalada.

@@ -19,9 +19,9 @@ reporte cambia.
     "author": "Yagüven C.G.",
     "website": "https://yaguven.com",
     "category": "Accounting/Accounting",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "license": "LGPL-3",
-    "depends": ["account", "web"],
+    "depends": ["account", "web", "l10n_ar"],
     "data": [
         "views/account_journal_views.xml",
         "views/report_layout.xml",
