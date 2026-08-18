@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        El logo del diario se resuelve UNA vez, en el despachador `web.external_layout`,
+        antes de que éste haga el t-call al layout concreto. Como en QWeb las variables
+        de `t-set` del llamador son visibles en el llamado, `logo_diario` llega a los
+        siete layouts sin repetir la expresión en cada uno.
+
+        La guarda copia el idioma que usa el propio Odoo dos líneas más arriba
+        (`o and 'company_id' in o`): `o` puede no estar definido — al previsualizar el
+        formato del documento desde Ajustes, por ejemplo — y QWeb lo evalúa como falso.
+    -->
+    <template id="external_layout_logo_diario" inherit_id="web.external_layout">
+        <xpath expr="//t[@t-if='company.external_report_layout_id']" position="before">
+            <t t-set="logo_diario"
+               t-value="o.journal_id.sudo().logo if o and 'journal_id' in o else False"/>
+        </xpath>
+    </template>
+
+    <!--
+        Un inherit por layout. Se tocan sólo `t-if` y `t-att-src`: la clase CSS de cada
+        uno queda intacta, así el logo conserva el tamaño y la posición que el layout
+        le da. Sin logo en el diario, `logo_diario` es falso y la expresión colapsa a
+        `company.logo` — exactamente el comportamiento de origen.
+    -->
+    <template id="layout_bubble_logo_diario" inherit_id="web.external_layout_bubble">
+        <xpath expr="//img[@t-att-src='image_data_uri(company.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="layout_standard_logo_diario" inherit_id="web.external_layout_standard">
+        <xpath expr="//img[@t-att-src='image_data_uri(company.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="layout_bold_logo_diario" inherit_id="web.external_layout_bold">
+        <xpath expr="//img[@t-att-src='image_data_uri(company.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="layout_boxed_logo_diario" inherit_id="web.external_layout_boxed">
+        <xpath expr="//img[@t-att-src='image_data_uri(company.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="layout_folder_logo_diario" inherit_id="web.external_layout_folder">
+        <xpath expr="//img[@t-att-src='image_data_uri(company.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="layout_striped_logo_diario" inherit_id="web.external_layout_striped">
+        <xpath expr="//img[@t-att-src='image_data_uri(company.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="layout_wave_logo_diario" inherit_id="web.external_layout_wave">
+        <xpath expr="//img[@t-att-src='image_data_uri(company.logo)']" position="attributes">
+            <attribute name="t-if">logo_diario or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(logo_diario or company.logo)</attribute>
+        </xpath>
+    </template>
+
+</odoo>

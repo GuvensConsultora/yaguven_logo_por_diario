@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_journal_form_logo" model="ir.ui.view">
+        <field name="name">account.journal.form.logo.punto.venta</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="invoice_template_pdf_report_id" position="after">
+                <field name="logo" widget="image" class="oe_avatar"
+                       options="{'preview_image': 'logo'}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
