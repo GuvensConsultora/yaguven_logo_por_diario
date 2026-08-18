@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_yaguven_unidad_papeleria_list" model="ir.ui.view">
+        <field name="name">yaguven.unidad.papeleria.list</field>
+        <field name="model">yaguven.unidad.papeleria</field>
+        <field name="arch" type="xml">
+            <list string="Unidades de papelería">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_yaguven_unidad_papeleria_form" model="ir.ui.view">
+        <field name="name">yaguven.unidad.papeleria.form</field>
+        <field name="model">yaguven.unidad.papeleria</field>
+        <field name="arch" type="xml">
+            <form string="Unidad de papelería">
+                <sheet>
+                    <field name="logo" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Casa de Repuestos"/></h1>
+                    </div>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="active" widget="boolean_toggle"/>
+                    </group>
+                    <p class="text-muted">
+                        Los documentos de los usuarios asignados a esta unidad se imprimen
+                        con este logo, salvo que el comprobante tenga un diario con logo
+                        propio: en ese caso manda el del diario.
+                    </p>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_yaguven_unidad_papeleria" model="ir.actions.act_window">
+        <field name="name">Unidades de papelería</field>
+        <field name="res_model">yaguven.unidad.papeleria</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_yaguven_unidad_papeleria"
+              name="Unidades de papelería"
+              parent="base.menu_users"
+              action="action_yaguven_unidad_papeleria"
+              sequence="90"/>
+
+</odoo>

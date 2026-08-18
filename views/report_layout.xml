@@ -2,19 +2,24 @@
 <odoo>
 
     <!--
-        El logo del diario se resuelve UNA vez, en el despachador `web.external_layout`,
-        antes de que éste haga el t-call al layout concreto. Como en QWeb las variables
-        de `t-set` del llamador son visibles en el llamado, `logo_diario` llega a los
-        siete layouts sin repetir la expresión en cada uno.
+        El logo se resuelve UNA vez, en el despachador `web.external_layout`, antes de
+        que éste haga el t-call al layout concreto. Como en QWeb las variables de
+        `t-set` del llamador son visibles en el llamado, `logo_diario` llega a los siete
+        layouts —y a los encabezados de la localización argentina— sin repetir la
+        expresión en cada uno.
 
-        La guarda copia el idioma que usa el propio Odoo dos líneas más arriba
-        (`o and 'company_id' in o`): `o` puede no estar definido — al previsualizar el
-        formato del documento desde Ajustes, por ejemplo — y QWeb lo evalúa como falso.
+        Toda la decisión vive en `_yaguven_logo_unidad()`, definido sobre `base` y por
+        lo tanto disponible en cualquier modelo que llegue a un reporte. Acá no hay
+        lógica: si `o` no está definido —al previsualizar el formato del documento desde
+        Ajustes, por ejemplo— QWeb lo evalúa como falso y el layout cae al logo de la
+        compañía.
+
+        El nombre `logo_diario` se conserva por compatibilidad: los siete layouts de
+        abajo y el encabezado de la factura argentina ya lo leen.
     -->
     <template id="external_layout_logo_diario" inherit_id="web.external_layout">
         <xpath expr="//t[@t-if='company.external_report_layout_id']" position="before">
-            <t t-set="logo_diario"
-               t-value="o.journal_id.sudo().logo if o and 'journal_id' in o else False"/>
+            <t t-set="logo_diario" t-value="o._yaguven_logo_unidad() if o else False"/>
         </xpath>
     </template>
 
